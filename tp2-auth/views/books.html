@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books | Authentication App</title>
+    <link rel="stylesheet" href="/css/tailwind.css">
+  </head>
+  <body class="bg-gray-50">
+    <nav class="bg-white shadow-md">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <a class="text-2xl font-bold text-blue-600" href="/">AuthApp</a>
+        <div>
+          <!-- Logique dynamique de navigation (utilisateur connecté) -->
+          <span class="text-gray-700 mr-4">Welcome, [Nom d'utilisateur]!</span>
+          <a class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" href="/auth/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container mx-auto px-4 py-8">
+      <!-- Les messages flash (success/error) seraient affichés ici dynamiquement -->
+      
+      <div class="py-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8">📚 Books Collection</h1>
+        <p class="text-gray-600 mb-6">Welcome to our library! Here are some classic books in our collection.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Début de la boucle de livres (statique) -->
+          <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-32 flex items-center justify-center">
+              <div class="text-white text-4xl">📖</div>
+            </div>
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-2">The Great Gatsby</h2>
+              <div class="mb-3">
+                <p class="text-gray-600 text-sm"><strong>Author:</strong><span class="ml-2">F. Scott Fitzgerald</span></p>
+              </div>
+              <div class="mb-3">
+                <p class="text-gray-600 text-sm"><strong>Published:</strong><span class="ml-2">1925</span></p>
+              </div>
+              <div class="mb-4">
+                <p class="text-gray-700">A classic novel of the Jazz Age</p>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Book 1</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-32 flex items-center justify-center">
+              <div class="text-white text-4xl">📖</div>
+            </div>
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-2">To Kill a Mockingbird</h2>
+              <div class="mb-3">
+                <p class="text-gray-600 text-sm"><strong>Author:</strong><span class="ml-2">Harper Lee</span></p>
+              </div>
+              <div class="mb-3">
+                <p class="text-gray-600 text-sm"><strong>Published:</strong><span class="ml-2">1960</span></p>
+              </div>
+              <div class="mb-4">
+                <p class="text-gray-700">A gripping tale of racial injustice and childhood innocence</p>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Book 2</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-32 flex items-center justify-center">
+              <div class="text-white text-4xl">📖</div>
+            </div>
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-2">1984</h2>
+              <div class="mb-3">
+                <p class="text-gray-600 text-sm"><strong>Author:</strong><span class="ml-2">George Orwell</span></p>
+              </div>
+              <div class="mb-3">
+                <p class="text-gray-600 text-sm"><strong>Published:</strong><span class="ml-2">1949</span></p>
+              </div>
+              <div class="mb-4">
+                <p class="text-gray-700">A dystopian social science fiction novel</p>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Book 3</span>
+              </div>
+            </div>
+          </div>
+          <!-- Fin de la boucle de livres (statique) -->
+        </div>
+        <div class="mt-12 bg-blue-50 border-l-4 border-blue-500 p-6 rounded">
+          <h3 class="text-lg font-bold text-gray-800 mb-2">💡 About This Collection</h3>
+          <p class="text-gray-700">This is a curated selection of classic literature from around the world. Each book represents a significant work in literary history and continues to be read and studied by millions of readers today.</p>
+          <div class="mt-4">
+            <p class="text-gray-600 text-sm"><strong>Total Books:</strong><span class="ml-2">5 (dynamique)</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8">
+      <p>&copy; 2024 Authentication App. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

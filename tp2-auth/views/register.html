@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Authentication App</title>
+    <link rel="stylesheet" href="/css/tailwind.css">
+  </head>
+  <body class="bg-gray-50">
+    <nav class="bg-white shadow-md">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <a class="text-2xl font-bold text-blue-600" href="/">AuthApp</a>
+        <div>
+          <!-- Logique dynamique de navigation (utilisateur non connecté) -->
+          <a class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2" href="/auth/login">Login</a>
+          <a class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded" href="/auth/register">Register</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container mx-auto px-4 py-8">
+      <!-- Les messages flash (success/error) seraient affichés ici dynamiquement -->
+      
+      <div class="flex justify-center items-center min-h-screen">
+        <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+          <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Register</h1>
+          
+          <!-- Le message d'erreur/succès dynamique serait affiché ici -->
+
+          <form method="POST" action="/auth/register">
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="username">Username</label>
+              <input class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="email">Email</label>
+              <input class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="password">Password</label>
+              <input class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-700 font-bold mb-2" for="passwordConfirm">Confirm Password</label>
+              <input class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm your password" required>
+            </div>
+            <button class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition" type="submit">Register</button>
+            <div class="text-center mt-4">
+              <p class="text-gray-600">Already have an account?<a class="text-blue-500 hover:text-blue-700 font-bold" href="/auth/login"> Login here</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8">
+      <p>&copy; 2024 Authentication App. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
