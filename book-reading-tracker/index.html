@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reading Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .book-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .book-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-8">
+    <div class="max-w-6xl mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">📚 Book Reading Tracker</h1>
+            <p class="text-gray-600">Suivez votre progression de lecture et gérez votre bibliothèque</p>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="text-sm text-gray-600 mb-2">Livres lus</div>
+                <div class="text-3xl font-bold text-blue-600" id="totalBooksRead">0</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="text-sm text-gray-600 mb-2">Pages lues</div>
+                <div class="text-3xl font-bold text-green-600" id="totalPagesRead">0</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="text-sm text-gray-600 mb-2">Total de livres</div>
+                <div class="text-3xl font-bold text-purple-600" id="totalBooks">0</div>
+            </div>
+        </div>
+
+        <!-- Main Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Form Section -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-lg p-6 sticky top-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Ajouter un livre</h2>
+                    <form id="bookForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Titre</label>
+                            <input type="text" id="title" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Titre du livre">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Auteur</label>
+                            <input type="text" id="author" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Nom de l'auteur">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Pages totales</label>
+                                <input type="number" id="pages" required min="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Pages lues</label>
+                                <input type="number" id="pagesRead" required min="0" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+                            <select id="status" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Sélectionner un statut</option>
+                                <option value="Read">Lue</option>
+                                <option value="Re-read">Relue</option>
+                                <option value="DNF">Abandonnée (DNF)</option>
+                                <option value="Currently reading">En cours de lecture</option>
+                                <option value="Returned Unread">Retournée non lue</option>
+                                <option value="Want to read">À lire</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Format</label>
+                            <select id="format" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Sélectionner un format</option>
+                                <option value="Print">Papier</option>
+                                <option value="PDF">PDF</option>
+                                <option value="Ebook">Ebook</option>
+                                <option value="AudioBook">Audiobook</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Prix</label>
+                                <input type="number" id="price" step="0.01" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0.00">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Suggéré par</label>
+                                <input type="text" id="suggestedBy" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ami, blog...">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
+                            Ajouter le livre
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Books List Section -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Ma Bibliothèque</h2>
+                    <div id="booksList" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            Aucun livre ajouté. Commencez par ajouter votre premier livre!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CLASSE BOOK
+        // ============================================
+        class Book {
+            constructor(title, author, pages, status, price, pagesRead, format, suggestedBy) {
+                this.id = Date.now();
+                this.title = title;
+                this.author = author;
+                this.pages = pages;
+                this.status = status;
+                this.price = price;
+                this.pagesRead = pagesRead;
+                this.format = format;
+                this.suggestedBy = suggestedBy;
+                this.finished = pagesRead >= pages ? 1 : 0;
+                this.createdAt = new Date().toISOString();
+            }
+
+            /**
+             * Retourne la position actuelle de lecture
+             * @returns {string} Position formatée (ex: "150/300 pages")
+             */
+            currentlyAt() {
+                return `${this.pagesRead}/${this.pages} pages`;
+            }
+
+            /**
+             * Retourne le pourcentage de lecture
+             * @returns {number} Pourcentage entre 0 et 100
+             */
+            getProgress() {
+                return Math.round((this.pagesRead / this.pages) * 100);
+            }
+
+            /**
+             * Supprime le livre (marque pour suppression)
+             * @returns {boolean} Toujours true
+             */
+            deleteBook() {
+                return true;
+            }
+
+            /**
+             * Met à jour les pages lues et le statut finished
+             * @param {number} pagesRead Nombre de pages lues
+             */
+            updateProgress(pagesRead) {
+                this.pagesRead = Math.min(pagesRead, this.pages);
+                this.finished = this.pagesRead >= this.pages ? 1 : 0;
+            }
+        }
+
+        // ============================================
+        // GESTION DE L'APPLICATION
+        // ============================================
+        class BookManager {
+            constructor() {
+                this.books = this.loadBooks();
+                this.initEventListeners();
+                this.render();
+            }
+
+            loadBooks() {
+                const stored = localStorage.getItem('books');
+                return stored ? JSON.parse(stored) : [];
+            }
+
+            saveBooks() {
+                localStorage.setItem('books', JSON.stringify(this.books));
+            }
+
+            addBook(bookData) {
+                const book = new Book(
+                    bookData.title,
+                    bookData.author,
+                    parseInt(bookData.pages),
+                    bookData.status,
+                    parseFloat(bookData.price) || 0,
+                    parseInt(bookData.pagesRead),
+                    bookData.format,
+                    bookData.suggestedBy
+                );
+                this.books.push(book);
+                this.saveBooks();
+                this.render();
+            }
+
+            deleteBook(id) {
+                this.books = this.books.filter(book => book.id !== id);
+                this.saveBooks();
+                this.render();
+            }
+
+            updateBookProgress(id, pagesRead) {
+                const book = this.books.find(b => b.id === id);
+                if (book) {
+                    book.updateProgress(pagesRead);
+                    this.saveBooks();
+                    this.render();
+                }
+            }
+
+            getStatistics() {
+                const booksRead = this.books.filter(b => b.finished === 1).length;
+                const totalPages = this.books.reduce((sum, b) => sum + b.pagesRead, 0);
+                const totalBooks = this.books.length;
+
+                return { booksRead, totalPages, totalBooks };
+            }
+
+            initEventListeners() {
+                document.getElementById('bookForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = {
+                        title: document.getElementById('title').value,
+                        author: document.getElementById('author').value,
+                        pages: document.getElementById('pages').value,
+                        status: document.getElementById('status').value,
+                        price: document.getElementById('price').value,
+                        pagesRead: document.getElementById('pagesRead').value,
+                        format: document.getElementById('format').value,
+                        suggestedBy: document.getElementById('suggestedBy').value
+                    };
+
+                    // Validation
+                    if (parseInt(formData.pagesRead) > parseInt(formData.pages)) {
+                        alert('Les pages lues ne peuvent pas dépasser le nombre total de pages!');
+                        return;
+                    }
+
+                    this.addBook(formData);
+                    document.getElementById('bookForm').reset();
+                });
+            }
+
+            render() {
+                this.updateStatistics();
+                this.renderBooks();
+            }
+
+            updateStatistics() {
+                const stats = this.getStatistics();
+                document.getElementById('totalBooksRead').textContent = stats.booksRead;
+                document.getElementById('totalPagesRead').textContent = stats.totalPages;
+                document.getElementById('totalBooks').textContent = stats.totalBooks;
+            }
+
+            renderBooks() {
+                const booksList = document.getElementById('booksList');
+
+                if (this.books.length === 0) {
+                    booksList.innerHTML = '<div class="text-center text-gray-500 py-8">Aucun livre ajouté. Commencez par ajouter votre premier livre!</div>';
+                    return;
+                }
+
+                booksList.innerHTML = this.books.map(book => `
+                    <div class="book-card bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-gray-800">${this.escapeHtml(book.title)}</h3>
+                                <p class="text-sm text-gray-600">par ${this.escapeHtml(book.author)}</p>
+                            </div>
+                            <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full ${this.getStatusColor(book.status)}">
+                                ${book.status}
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
+                            <div>
+                                <span class="text-gray-600">Format:</span>
+                                <span class="font-medium text-gray-800">${book.format}</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-600">Prix:</span>
+                                <span class="font-medium text-gray-800">${book.price > 0 ? book.price + '€' : 'N/A'}</span>
+                            </div>
+                            ${book.suggestedBy ? `<div class="col-span-2"><span class="text-gray-600">Suggéré par:</span> <span class="font-medium text-gray-800">${this.escapeHtml(book.suggestedBy)}</span></div>` : ''}
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-700">Progression</span>
+                                <span class="text-sm font-bold text-blue-600">${book.getProgress()}%</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div class="progress-bar bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: ${book.getProgress()}%"></div>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-2">${book.currentlyAt()}</p>
+                        </div>
+
+                        <div class="flex gap-2 mb-3">
+                            <input type="number" class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm" 
+                                   value="${book.pagesRead}" min="0" max="${book.pages}"
+                                   onchange="manager.updateBookProgress(${book.id}, this.value)">
+                            <span class="text-sm text-gray-600 py-1">/ ${book.pages}</span>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <button onclick="manager.deleteBook(${book.id})" class="flex-1 bg-red-500 hover:bg-red-600 text-white text-sm font-medium py-2 px-3 rounded transition duration-200">
+                                Supprimer
+                            </button>
+                            ${book.finished === 1 ? '<span class="flex-1 bg-green-500 text-white text-sm font-medium py-2 px-3 rounded text-center">✓ Terminé</span>' : ''}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            getStatusColor(status) {
+                const colors = {
+                    'Read': 'bg-green-100 text-green-800',
+                    'Re-read': 'bg-blue-100 text-blue-800',
+                    'DNF': 'bg-red-100 text-red-800',
+                    'Currently reading': 'bg-yellow-100 text-yellow-800',
+                    'Returned Unread': 'bg-gray-100 text-gray-800',
+                    'Want to read': 'bg-purple-100 text-purple-800'
+                };
+                return colors[status] || 'bg-gray-100 text-gray-800';
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        }
+
+        // ============================================
+        // INITIALISATION
+        // ============================================
+        const manager = new BookManager();
+    </script>
+</body>
+</html>
