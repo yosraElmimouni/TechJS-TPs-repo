@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Tracker</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-10">
+
+  <h1 class="text-4xl font-bold text-center mb-10 text-blue-700">📚 Book Tracker</h1>
+
+  <!-- FORMULAIRE -->
+  <div class="max-w-xl mx-auto bg-white shadow p-6 rounded">
+    <h2 class="text-2xl font-semibold mb-4">Ajouter un Livre</h2>
+
+    <form id="bookForm" class="space-y-3">
+
+      <input type="text" id="title" placeholder="Title"
+        class="w-full p-2 border rounded" required>
+
+      <input type="text" id="author" placeholder="Author"
+        class="w-full p-2 border rounded" required>
+
+      <input type="number" id="pages" placeholder="Number of pages"
+        class="w-full p-2 border rounded" required>
+
+      <input type="number" id="pagesRead" placeholder="Pages read"
+        class="w-full p-2 border rounded" required>
+
+      <input type="number" id="price" placeholder="Price"
+        class="w-full p-2 border rounded">
+
+      <input type="text" id="suggestedBy" placeholder="Suggested by"
+        class="w-full p-2 border rounded">
+
+      <select id="status" class="w-full p-2 border rounded">
+        <option>Read</option>
+        <option>Re-read</option>
+        <option>DNF</option>
+        <option>Currently reading</option>
+        <option>Returned Unread</option>
+        <option>Want to read</option>
+      </select>
+
+      <select id="format" class="w-full p-2 border rounded">
+        <option>Print</option>
+        <option>PDF</option>
+        <option>Ebook</option>
+        <option>AudioBook</option>
+      </select>
+
+      <button class="w-full bg-blue-600 text-white p-2 rounded font-bold hover:bg-blue-700">
+        Ajouter Livre
+      </button>
+
+    </form>
+  </div>
+
+  <hr class="my-10">
+
+  <!-- STATISTIQUES -->
+  <div id="stats" class="text-center text-lg font-semibold mb-6"></div>
+
+  <!-- LISTE DES LIVRES -->
+  <div id="booksContainer" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+
+  <!-- Ton code JS compilé par TypeScript -->
+  <script type="module" src="./dist/main.js"></script>
+
+</body>
+</html>
